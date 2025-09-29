@@ -47,9 +47,12 @@ services:
       - "${PGBOUNCER_PORT:-6434}:6432"
     volumes:
       - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
-      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt:ro
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt 
     environment:
       TZ: UTC
+      PGUSER: ${POSTGRES_USER:-demo}
+      PGPASSWORD: ${POSTGRES_PASSWORD:-demo}
+      PGDATABASE: ${POSTGRES_DB:-demo}
     healthcheck:
       test: ["CMD", "pg_isready", "-h", "localhost", "-p", "6432"]
       interval: 10s
